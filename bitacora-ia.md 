@@ -1,0 +1,111 @@
+# Bitácora de Uso de IA
+
+## Prompt 1: Estructura general del proyecto
+
+**Prompt usado:**
+"Estoy haciendo un proyecto en Python que simula una arena de combate con inventario usando Tkinter. Debo aplicar programación funcional: funciones de orden superior, match/case, dataclasses inmutables, lambdas, closures, inmutabilidad, y map/filter/reduce. ¿Cómo me recomiendas estructurar el código en capas (visual, lógica, estado) sin usar POO para la lógica?"
+
+**Respuesta de la IA:**
+La IA sugirió separar el proyecto en 3 capas:
+- Capa visual: Tkinter, widgets, botones.
+- Capa lógica: funciones puras que procesan las acciones.
+- Capa de estado: un closure que encapsula el estado de la partida.
+
+También sugirió usar dataclasses para los modelos de datos.
+
+**Qué acepté:**
+- La separación en 3 capas.
+- El uso de dataclasses, pero las cambié a frozen=True para garantizar inmutabilidad.
+
+**Qué modifiqué:**
+- La IA no mencionó frozen=True. Lo agregué yo para cumplir con el requisito de inmutabilidad.
+
+**Qué rechacé:**
+- La IA propuso usar clases para la lógica. Lo rechacé y usé funciones puras en su lugar.
+
+---
+
+## Prompt 2: Encapsulamiento del estado sin variables globales
+
+**Prompt usado:**
+"En Python, necesito mantener el estado de una partida (turno, historial, jugador, enemigo) sin usar variables globales ni clases. ¿Cómo puedo encapsular ese estado usando closures y nonlocal?"
+
+**Respuesta de la IA:**
+La IA sugirió crear una función externa que defina un diccionario con el estado y retorne una función interna que lo modifique usando nonlocal.
+
+**Qué acepté:**
+- La idea del closure con un diccionario interno.
+- El uso de nonlocal.
+
+**Qué modifiqué:**
+- Nada, la sugerencia fue directa y útil.
+
+**Qué rechacé:**
+- Una versión que usaba la palabra clave global. La rechacé porque viola el principio de encapsulamiento.
+
+---
+
+## Prompt 3: Reemplazar bucles por filter, map y reduce
+
+**Prompt usado:**
+"Tengo una tupla de objetos con atributos (nombre, tipo, valor). Necesito: (1) filtrar solo los de tipo 'pocion', (2) extraer solo los nombres, (3) sumar todos los valores. ¿Cómo hago esto sin usar bucles for, usando filter, map y reduce con lambdas?"
+
+**Respuesta de la IA:**
+La IA propuso:
+- filter(lambda obj: obj.tipo == "pocion", inventario) para filtrar.
+- map(lambda obj: obj.nombre, inventario) para extraer nombres.
+- reduce(lambda acc, obj: acc + obj.valor, inventario, 0) para sumar valores.
+
+**Qué acepté:**
+- Las tres sugerencias. Funcionaron exactamente como esperaba.
+
+**Qué modifiqué:**
+- Nada.
+
+**Qué rechacé:**
+- Una versión alternativa que usaba list comprehensions. La rechacé porque el profesor pide específicamente filter/map/reduce.
+
+---
+
+## Prompt 4: match/case para procesar acciones
+
+**Prompt usado:**
+"Tengo acciones que llegan como tuplas: ('atacar',), ('curar',), ('defender',), ('estado',). ¿Cómo uso match/case en Python 3.10+ para procesar cada tipo de acción y retornar un mensaje diferente?"
+
+**Respuesta de la IA:**
+La IA propuso un match con casos para cada tipo de acción, incluyendo un caso por defecto (case _) para acciones no reconocidas.
+
+**Qué acepté:**
+- La estructura general del match/case.
+- El caso por defecto.
+
+**Qué modifiqué:**
+- Agregué casos más específicos para manejar el inventario dentro del caso "curar".
+
+**Qué rechacé:**
+- Nada, la sugerencia fue completa.
+
+---
+
+## Prompt 5: Inmutabilidad con dataclasses
+
+**Prompt usado:**
+"Uso dataclasses en Python para representar personajes. Quiero que sean inmutables y que al aplicar daño se cree un NUEVO personaje en lugar de modificar el existente. ¿Cómo lo hago con frozen=True y dataclasses.replace()?"
+
+**Respuesta de la IA:**
+La IA sugirió usar @dataclass(frozen=True) para que los objetos sean inmutables, y dataclasses.replace() para crear una nueva instancia con los atributos modificados.
+
+**Qué acepté:**
+- Ambas sugerencias. Son exactamente lo que necesitaba.
+
+**Qué modifiqué:**
+- Nada.
+
+**Qué rechacé:**
+- Una versión alternativa que usaba copias manuales con __dict__. La rechacé porque replace() es más limpio.
+
+---
+
+## Conclusión
+
+La IA fue útil para acelerar la estructura inicial del proyecto. Sin embargo, todas las decisiones técnicas de programación funcional (inmutabilidad, closures, HOFs, uso de match/case) fueron revisadas y ajustadas por mí para cumplir con los requisitos del profesor. La IA no reemplazó mi criterio técnico, sino que lo complementó.
